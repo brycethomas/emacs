@@ -43,7 +43,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (zenburn-theme))))
+ '(package-selected-packages (quote (markdown-mode zenburn-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -53,5 +53,8 @@
 
 ;; For new machines, run these commands once:
 ;; M-x package-refresh-contents
-;; M-X package-install zenburn-theme
+;; M-X package-install RET zenburn-theme
 (load-theme 'zenburn t)
+
+;; For new machines, run these commands once:
+;; M-x package-install RET markdown-mode
