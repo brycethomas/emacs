@@ -43,7 +43,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (markdown-mode zenburn-theme))))
+ '(package-selected-packages (quote (tide markdown-mode zenburn-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -58,3 +58,36 @@
 
 ;; For new machines, run these commands once:
 ;; M-x package-install RET markdown-mode
+
+;; For new machines, run these commands once:
+;; M-x package-install RET tide
+;; From https://emacs.stackexchange.com/a/34202
+;; This avoids tide error https://github.com/ananthakumaran/tide/issues/
+;; Note this is brittle as it's hardcoded to node version.
+;; Reasons I didn't go with the exec-path-from-shell solution offered in the SO
+;; answer is that it seems to have some caveat about using absolute PATH exports
+;; in shell startup files:
+;; https://github.com/purcell/exec-path-from-shell#setting-up-your-shell-startup-files-correctly.
+;; I wasn't ready to commit to remembering to always do that.
+(setq exec-path (append exec-path '("~/.nvm/versions/node/v12.0.0/bin")))
+
+;; From https://github.com/ananthakumaran/tide/
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
