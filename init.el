@@ -91,3 +91,6 @@
 (add-hook 'before-save-hook 'tide-format-before-save)
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+;; .gn file support (Generate Ninja)
+(load-file "~/src/emacs/gn.el")
